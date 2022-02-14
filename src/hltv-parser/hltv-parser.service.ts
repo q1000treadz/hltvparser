@@ -100,27 +100,24 @@ export class HltvParserService {
         let totalKills = {}
         let totalDeaths = {};
         let maps = {};
-        let team1 = {};
-        let team2 = {};
+        let totalTeam1 = {};
+        let totalTeam2 = {};
         parseResult.matches.map((obj) => {
-            if(totalKills[obj.kills] === undefined)
-            totalKills[obj.kills] = 0;
-            if(totalDeaths[obj.deaths] === undefined)
-            totalDeaths[obj.deaths] = 0;
-            if(maps[obj.map] === undefined)
-            maps[obj.map] = 0;
-            if(team1[obj.team1] === undefined)
-            team1[obj.team1] = 0;
-            if(team2[obj.team2] === undefined)
-            team2[obj.team2] = 0;
-
-            totalKills[obj.kills]++;
-            totalDeaths[obj.deaths]++;
-            maps[obj.map]++;
-            team1[obj.team1]++;
-            team2[obj.team2]++;
+            const { kills, deaths, map, team1, team2} = obj;
+            totalKills[kills] = totalKills[kills] ? totalKills[kills]+1 : 1;
+            totalDeaths[deaths] = totalDeaths[deaths] ? totalDeaths[deaths]+1 : 1;
+            maps[map] = maps[map] ?  maps[map]+1 : 1;
+            totalTeam1[team1] = totalTeam1[team1] ? totalTeam1[team1]+1 : 1;
+            totalTeam2[team2] = totalTeam2[team2] ? totalTeam2[team2]+1 : 1;
         });
-        return {name: parseResult.name, kills:totalKills,deaths:totalDeaths, maps: maps,team1:team1, team2:team2};
+        return {
+            name: parseResult.name,
+            kills: totalKills,
+            deaths: totalDeaths,
+            maps: maps,
+            team1: totalTeam1,
+            team2: totalTeam2
+        };
     }
     async calculateMatchHistory(id: number): Promise<any> {
         const text = await this.getMatchHistoryPage(id);
