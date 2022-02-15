@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { HltvParserService } from './hltv-parser.service';
+import { MatchStatsService } from './match-stats.service';
 
-describe('HltvParserService', () => {
-  let service: HltvParserService;
+describe('MatchStatsService', () => {
+  let service: MatchStatsService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [HltvParserService],
+      providers: [MatchStatsService],
     }).compile();
 
-    service = module.get<HltvParserService>(HltvParserService);
+    service = module.get<MatchStatsService>(MatchStatsService);
   });
 
   it('should be defined', () => {

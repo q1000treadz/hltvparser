@@ -34,7 +34,7 @@ import axios from 'axios';
                   </tr>
 */
 @Injectable()
-export class HltvParserService {
+export class PlayerMatchHistoryService {
     async getMatchHistoryPage(id: number): Promise<any> {
         const page = await axios.get("https://www.hltv.org/stats/players/matches/"+ id + "/_");
         return page.data;

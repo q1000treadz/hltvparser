@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { PlayerMatchHistory, PlayerMatchHistorySchema } from 'src/schemas/player-match-history.schema';
-import { HltvParserController } from './hltv-parser.controller';
-import { HltvParserService } from './hltv-parser.service';
+import { PlayerMatchHistoryController } from './player-match-history.controller';
+import { PlayerMatchHistoryService } from './player-match-history.service';
 
 @Module({
     imports: [MongooseModule.forFeature([{ name: "PlayerMatchHistory", schema: PlayerMatchHistorySchema }])],
-    controllers: [HltvParserController],
-    providers: [HltvParserService],
+    controllers: [PlayerMatchHistoryController],
+    providers: [PlayerMatchHistoryService],
 })
-export class HltvParserModule {}
+export class PlayerMatchHistoryModule {}
