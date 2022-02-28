@@ -5,7 +5,7 @@ export type PlayerMatchHistoryDocument = PlayerMatchHistory & Document;
 
 @Schema()
 export class PlayerMatch {
-  @Prop()
+  @Prop({unique: true})
   id: number;
 
   @Prop()

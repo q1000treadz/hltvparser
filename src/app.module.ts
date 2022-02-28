@@ -8,9 +8,10 @@ import { PlayerMatchHistoryModule } from './player-match-history/player-match-hi
 import { MatchStatsController } from './match-stats/match-stats.controller';
 import { MatchStatsService } from './match-stats/match-stats.service';
 import { MatchStatsModule } from './match-stats/match-stats.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [MongooseModule.forRoot('mongodb://localhost:27017/hltv'), PlayerMatchHistoryModule, MatchStatsModule],
+  imports: [MongooseModule.forRoot('mongodb://localhost:27017/hltv'), PlayerMatchHistoryModule, MatchStatsModule, AuthModule],
   controllers: [AppController, MatchStatsController],
   providers: [AppService, MatchStatsService],
 })

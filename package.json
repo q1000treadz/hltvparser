@@ -23,9 +23,11 @@
   "dependencies": {
     "@nestjs/common": "^8.0.0",
     "@nestjs/core": "^8.0.0",
+    "@nestjs/jwt": "^8.0.0",
     "@nestjs/mongoose": "^9.0.2",
     "@nestjs/platform-express": "^8.0.0",
     "axios": "^0.26.0",
+    "class-validator": "^0.13.2",
     "fs": "^0.0.1-security",
     "mongoose": "^6.2.1",
     "reflect-metadata": "^0.1.13",

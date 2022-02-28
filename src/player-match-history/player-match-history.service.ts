@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
 import axios from 'axios';
+import { Model } from 'mongoose';
+import { PlayerMatchHistory } from 'src/schemas/player-match-history.schema';
 /*
 <td class="statsCenterText">29 - 16</td>
 <td class="gtSmartphone-only centerStat won">+13</td>
@@ -35,6 +38,9 @@ import axios from 'axios';
 */
 @Injectable()
 export class PlayerMatchHistoryService {
+    constructor(@InjectModel("PlayerMatchHistory") private readonly PlayerMatchHistoryModel: Model<PlayerMatchHistory> ) {}
+
+
     async getMatchHistoryPage(id: number): Promise<any> {
         const page = await axios.get("https://www.hltv.org/stats/players/matches/"+ id + "/_");
         return page.data;
@@ -120,9 +126,19 @@ export class PlayerMatchHistoryService {
         };
     }
     async calculateMatchHistory(id: number): Promise<any> {
-        const text = await this.getMatchHistoryPage(id);
-        const parseResult = this.parseMatchHistoryPage(id, text.toString());
-        const calculatedResult = this.calculateParsedPage(parseResult);
-        return calculatedResult;
+        
+        const player = await this.PlayerMatchHistoryModel.findOne({id: id});
+        if (player)  {
+            console.log("1");
+            const calculatedResult = this.calculateParsedPage(player);
+            return calculatedResult;
+        } else {
+            console.log("2");
+            const text = await this.getMatchHistoryPage(id);
+            const parseResult = this.parseMatchHistoryPage(id, text.toString());
+            await this.PlayerMatchHistoryModel.updateOne({id: id}, parseResult, {upsert:true});
+            const calculatedResult = this.calculateParsedPage(parseResult);
+            return calculatedResult;
+        }
     }
 }
